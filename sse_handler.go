@@ -32,10 +32,10 @@ type SSEHandler struct {
 // Make a new SSEHandler instance.
 func NewSSEHandler() *SSEHandler {
 	b := &SSEHandler{
-		make(map[chan string]bool),
-		make(chan (chan string)),
-		make(chan (chan string)),
-		make(chan string),
+		clients:        make(map[chan string]bool),
+		newClients:     make(chan (chan string)),
+		defunctClients: make(chan (chan string)),
+		messages:       make(chan string, 10), // buffer 10 msgs and don't block sends
 	}
 	return b
 }
